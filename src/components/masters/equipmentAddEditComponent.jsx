@@ -160,10 +160,10 @@ const EquipmentAddEditComponent = ({ mode, equipmentId }) => {
     soDate: stringWithCommonRules("So Date"),
     projectId: requiredField,
     ssrNo: Yup.string().when("projectId", {
-           is: (projectId) => projectId === 0 || projectId === "0",
-          then: () => stringWithCommonRules("SSR No"),
-          otherwise: () => Yup.string().notRequired().nullable(),
-        }),
+      is: (projectId) => projectId !== 0,
+      then: () => stringWithCommonRules("SSR No"),
+      otherwise: () => Yup.string().notRequired(),
+    }),
 
     photo: Yup.mixed()
       .test("fileType", "Only PNG, JPG, and JPEG files are allowed.", (value) => {
@@ -741,7 +741,7 @@ const EquipmentAddEditComponent = ({ mode, equipmentId }) => {
                       <button type="submit" className={`btn ${mode === "add" ? "submit" : "edit"} mt-3`} >
                         {mode === "add" ? "SUBMIT" : "UPDATE"}
                       </button>
-                      <button type="button" className="btn back mt-3" onClick={() => redirectEquipmentList()}>BACK</button>
+                      <button className="btn back mt-3" onClick={() => redirectEquipmentList()}>BACK</button>
                     </div>
                   </Form>
                 )}
